@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ogłoszenie - {{ ogloszenie.nazwa }}</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style_details.css') }}">
+</head>
+<body>
+<header>
+    <h1>Szczegóły ogłoszenia</h1>
+</header>
+
+<main class="ogloszenie-container">
+    <!-- Sekcja zdjęcia -->
+    <div class="ogloszenie-zdjecie">
+        <img src="{{ url_for('static', filename='uploads/' + ogloszenie.zdjecie) }}" alt="Zdjęcie ogłoszenia">
+    </div>
+
+    <!-- Sekcja szczegółów -->
+    <div class="ogloszenie-szczegoly">
+        <h2 class="ogloszenie-nazwa">{{ ogloszenie.nazwa }}</h2>
+        <p class="ogloszenie-opis"><strong>Opis:</strong> {{ ogloszenie.opis }}</p>
+        <p class="ogloszenie-cena"><strong>Cena:</strong> {{ ogloszenie.cena }} PLN</p>
+
+        <div class="ogloszenie-akcje">
+            <a href="{{ url_for('add_to_cart', id=ogloszenie.id) }}" class="btn-add-to-cart">Dodaj do koszyka</a>
+            <a href="{{ url_for('formularz') }}" class="btn-powrot">Powrót do listy ogłoszeń</a>
+        </div>
+
+        <!-- Dodatkowe informacje -->
+        <div class="ogloszenie-info">
+            <p><strong>Data dodania:</strong> {{ ogloszenie.data_dodania }}</p>
+            <p><strong>Kontakt:</strong> <a href="mailto:sprzedawca@example.com">sprzedawca@example.com</a></p>
+        </div>
+    </div>
+</main>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Strona python</title>
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<header>
+
+    <a href="{{url_for('koszyk')}}" class="koszyk">Koszyk</a>
+</header>
+   <form action ="#" method="post" enctype="multipart/form-data">
+       <h2>Dodawanie ogloszenia</h2>
+       <label for="nazwa">nazwa</label>
+       <input type="text" id="nazwa" name="nazwa">
+       <label for="opis" >opis</label>
+       <input type="text" id="opis" name="opis">
+       <label for="cena" >cena</label>
+       <input type="text" id="cena" name="cena">
+       <label for="zdjecie">Zdjęcie</label>
+        <input type="file" id="zdjecie" name="zdjecie">
+
+       <input type="submit" name="submit">
+
+
+   </form>
+
+{% for i in ogloszenia %}
+    <div class="ogloszenie">
+        <!-- Link do szczegółów ogłoszenia -->
+        <a href="{{ url_for('ogloszenie_details', id=i.id) }}" class="ogloszenie-link">
+            <div class="zdjecie">
+                {% if i.zdjecie %}
+                <img src="{{ url_for('static', filename='uploads/' + i.zdjecie) }}" alt="Zdjęcie ogłoszenia">
+                {% endif %}
+            </div>
+            <!-- Informacje o ogłoszeniu -->
+            <div class="ogloszenie-info">
+                <h3 class="ogloszenie-nazwa">{{ i.nazwa }}</h3>
+                <p class="ogloszenie-cena">{{ i.cena }} PLN</p>
+            </div>
+        </a>
+        <!-- Akcje -->
+        <div class="ogloszenie-akcje">
+            <a href="{{ url_for('add_to_cart', id=i.id) }}" class="btn-add-to-cart">Dodaj do koszyka</a>
+            <form action="{{ url_for('delete_ogloszenie', id=i.id) }}" method="post" style="display: inline;">
+                <button type="submit" class="btn-usun">Usuń</button>
+            </form>
+        </div>
+    </div>
+{% endfor %}
+
+
+</body>
+</html>

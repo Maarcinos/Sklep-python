@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Twój Koszyk</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Twój Koszyk</h1>
+    </header>
+
+    {% if ogloszenia %}
+        <ul>
+            {% for ogloszenie in ogloszenia %}
+                <li class="ogloszenie">
+                    <h2>{{ ogloszenie.nazwa }}</h2>
+                    
+                    <p><strong>Cena:</strong> {{ ogloszenie.cena }} PLN</p>
+                    {% if ogloszenie.zdjecie %}
+                        <img src="{{ url_for('static', filename='uploads/' + ogloszenie.zdjecie) }}" alt="Zdjęcie ogłoszenia" style="width:100px;height:auto;">
+                    {% endif %}
+                    <a href="{{ url_for('remove_from_cart', id=ogloszenie.id) }}">Usuń z koszyka</a>
+                </li>
+            {% endfor %}
+        </ul>
+        <p><strong>Łączna cena:</strong> {{ total_price }} PLN</p>
+
+        <a href="{{ url_for('formularz') }}">Dodaj więcej ogłoszeń</a>
+    {% else %}
+        <p>Koszyk jest pusty. <a href="{{ url_for('formularz') }}">Dodaj ogłoszenia</a></p>
+    {% endif %}
+</body>
+</html>
